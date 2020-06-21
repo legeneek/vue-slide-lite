@@ -7,7 +7,7 @@ light weight vue slide componnet
 npm i vue-slide-lite
 ```
 
-## useage
+## usage
 
 ```html
 <template>

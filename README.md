@@ -29,17 +29,13 @@ Vue.component('VueSlideLite', VueSlideLite.component)
 
 ## demo 
 
-run demo
-```
-npm run start 
-```
+check the [online demo](https://legeneek.github.io/vue-slide-lite/) or run local demo use `npm run start `
 
 ## props
 
 | Property | Type | Required? | Description |
 |:---|:---|:---|:---|
-| list | Array | true | slide list items
+| list | Array | true | slide list items，list should contain `at least 3 items`(loop slide requirement), if your list has 2 items, you should concat it: `list = list.concat(list)`
 | cur | Number | true | the current slide index (start from 0)
 | duration | Number | false | slide animation duration
 | dir | String | false | direction (default `ltr`)
-

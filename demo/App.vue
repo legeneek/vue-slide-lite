@@ -1,7 +1,7 @@
 <template>
   <div id="app" dir="ltr">
     <button @click="cur = Math.floor(Math.random() * list.length)">
-      change slide
+      random change slide
     </button>
     <div>{{ `current slide: ${cur}` }}</div>
     <div class="slide-container">

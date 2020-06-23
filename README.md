@@ -19,7 +19,7 @@ npm i vue-slide-lite
 </template>
 
 <script>
-import VueSlideLite from "../src/index"
+import VueSlideLite from "vue-slide-lite"
 // use as plugin
 Vue.use(VueSlideLite)
 // or use as component 

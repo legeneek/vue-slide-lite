@@ -1,6 +1,6 @@
 {
   "name": "vue-slide-lite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "light weight vue slide component",
   "main": "dist/vue-slide-lite.umd.js",
   "module": "dist/vue-slide-lite.esm.js",

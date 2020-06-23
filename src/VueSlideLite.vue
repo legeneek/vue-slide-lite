@@ -18,34 +18,34 @@ export default {
   props: {
     list: {
       require: true,
-      type: Array
+      type: Array,
     },
     dir: {
       type: String,
-      default: () => "ltr"
+      default: () => "ltr",
     },
     cur: {
       require: true,
       type: Number,
-      default: () => 0
+      default: () => 0,
     },
     duration: {
       type: Number,
-      default: () => 300
-    }
+      default: () => 300,
+    },
   },
   data() {
     return {
       slideWidth: 0,
       listItemStyle: [],
       dirFlag: 1,
-      wrapStyle: ''
+      wrapStyle: "",
     };
   },
   watch: {
     cur(v, o) {
       this.updateStyle([v, o]);
-    }
+    },
   },
   mounted() {
     this.init();
@@ -54,53 +54,41 @@ export default {
     init() {
       this.slideWidth = this.$el.offsetWidth;
       this.dirFlag = this.dir === "ltr" ? 1 : -1;
-      this.wrapStyle = `width:${this.list.length * this.slideWidth}px;`
+      this.wrapStyle = `width: ${this.list.length * this.slideWidth}px;`;
       this.updateStyle();
     },
+
+    calcStyle(left, duration, translateX) {
+      return `width: ${this.slideWidth}px; left: ${left}px; transition-duration: ${duration}ms; transform: translate(${translateX}px, 0px) translateZ(0px);`;
+    },
+
     updateStyle(arr) {
       const len = this.list.length;
       this.list.forEach((item, index) => {
-        let s;
-        const dur = arr && arr.indexOf(index) !== -1 ? this.duration : 0;
-        const left = -1 * this.slideWidth * index;
+        let translateXDirection = 0;
         if (this.cur === index) {
-          s = `width: ${this.slideWidth}px; left: ${left *
-            this
-              .dirFlag}px; transition-duration: ${dur}ms; transform: translate(0px, 0px) translateZ(0px);`;
+          translateXDirection = 0;
         } else if (index < this.cur) {
           if ((this.cur + 1) % len === index) {
-            s = `width: ${this.slideWidth}px; left: ${left *
-              this
-                .dirFlag}px; transition-duration: ${dur}ms; transform: translate(${this
-              .slideWidth * this.dirFlag}px, 0px) translateZ(0px);`;
+            translateXDirection = 1;
           } else {
-            s = `width:${this.slideWidth}px; left: ${left *
-              this
-                .dirFlag}px; transition-duration: ${dur}ms; transform: translate(${this
-              .slideWidth *
-              -1 *
-              this.dirFlag}px, 0px) translateZ(0px);`;
+            translateXDirection = -1;
           }
         } else if (index > this.cur) {
           if ((index + 1) % len === this.cur) {
-            s = `width: ${this.slideWidth}px; left: ${left *
-              this
-                .dirFlag}px; transition-duration: ${dur}ms; transform: translate(${this
-              .slideWidth *
-              -1 *
-              this.dirFlag}px, 0px) translateZ(0px);`;
+            translateXDirection = -1;
           } else {
-            s = `width: ${this.slideWidth}px; left: ${left *
-              this
-                .dirFlag}px; transition-duration: ${dur}ms; transform: translate(${this
-              .slideWidth * this.dirFlag}px, 0px) translateZ(0px);`;
+            translateXDirection = 1;
           }
         }
-
-        this.$set(this.listItemStyle, index, s);
+        const dur = arr && arr.indexOf(index) !== -1 ? this.duration : 0;
+        const left = this.slideWidth * index * this.dirFlag * -1;
+        let translateX = this.slideWidth * this.dirFlag * translateXDirection;
+        let style = this.calcStyle(left, dur, translateX);
+        this.$set(this.listItemStyle, index, style);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
